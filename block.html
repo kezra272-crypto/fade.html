@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sliding 3D Cube — 6 Faces</title>
+  <style>
+    :root{
+      --size: 220px;        
+      --gap: 20px;
+      --duration: 12s;      
+    }
+
+    *{box-sizing: border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:system-ui,Segoe UI,Roboto,Arial;
+      background: linear-gradient(135deg,#0f172a 0%, #0b1220 100%);
+      color:#e6eef8;
+    }
+
+    .wrap{
+      display:flex;
+      gap:var(--gap);
+      align-items:center;
+      flex-direction:column;
+    }
+
+    h1{
+      margin:0 0 8px 0;
+      font-size:18px;
+      text-align:center;
+      color:#dbeafe;
+    }
+    p.note{
+      margin:0 0 18px 0;
+      font-size:13px;
+      color:#9fb3d6;
+      text-align:center;
+    }
+
+   
+    .scene{
+      width: calc(var(--size) + 40px);
+      height: calc(var(--size) + 40px);
+      perspective: 900px;
+      -webkit-perspective:900px;
+    }
+
+    .cube{
+      width:var(--size);
+      height:var(--size);
+      position:relative;
+      margin:auto;
+      transform-style:preserve-3d;
+      transform: translateZ(calc(var(--size) / -2));
+      animation: rotateCube var(--duration) infinite ease-in-out;
+      transition: transform 0.6s ease;
+      cursor:grab;
+    }
+
+   
+    .scene:hover .cube,
+    .cube:active { animation-play-state: paused; cursor:grabbing; }
+
+   
+    .face{
+      position:absolute;
+      width:100%;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:38px;
+      font-weight:700;
+      color:#fff;
+      backface-visibility:hidden;
+      border-radius:10px;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.6), inset 0 -4px 18px rgba(0,0,0,0.2);
+    }
+
+   
+    .face--1{ background: linear-gradient(145deg,#ff7a7a,#ff4b6e); } 
+    .face--2{ background: linear-gradient(145deg,#ffd66b,#ffb84d); } 
+    .face--3{ background: linear-gradient(145deg,#6be3ff,#2bb7ff); } 
+    .face--4{ background: linear-gradient(145deg,#a2ff7a,#4bdc3f); } 
+    .face--5{ background: linear-gradient(145deg,#b78cff,#8a52ff); } 
+    .face--6{ background: linear-gradient(145deg,#ffffff,#d1e8ff); color:#0b1724; } 
+
+  
+    .face--1{ transform: rotateY(0deg)    translateZ(calc(var(--size) / 2)); }   
+    .face--2{ transform: rotateY(90deg)   translateZ(calc(var(--size) / 2)); }   
+    .face--3{ transform: rotateY(180deg)  translateZ(calc(var(--size) / 2)); }   
+    .face--4{ transform: rotateY(-90deg)  translateZ(calc(var(--size) / 2)); }   
+    .face--5{ transform: rotateX(90deg)   translateZ(calc(var(--size) / 2)); }   
+    .face--6{ transform: rotateX(-90deg)  translateZ(calc(var(--size) / 2)); }   
+
+    
+    .face small{
+      display:block;
+      font-size:12px;
+      opacity:0.9;
+      margin-top:6px;
+      font-weight:600;
+    }
+
+    @keyframes rotateCube {
+      0%   { transform: rotateX(0deg)    rotateY(0deg)    translateZ(calc(var(--size) / -2)); }  
+      12.5%{ transform: rotateX(0deg)    rotateY(-90deg)  translateZ(calc(var(--size) / -2)); }  
+      25%  { transform: rotateX(0deg)    rotateY(-180deg) translateZ(calc(var(--size) / -2)); }  
+      37.5%{ transform: rotateX(0deg)    rotateY(-270deg) translateZ(calc(var(--size) / -2)); }  
+      50%  { transform: rotateX(-90deg)  rotateY(-270deg) translateZ(calc(var(--size) / -2)); } 
+      62.5%{ transform: rotateX(90deg)   rotateY(-270deg) translateZ(calc(var(--size) / -2)); }  
+      75%  { transform: rotateX(0deg)    rotateY(-360deg) translateZ(calc(var(--size) / -2)); }  
+      100% { transform: rotateX(0deg)    rotateY(0deg)    translateZ(calc(var(--size) / -2)); }  
+    }
+
+   
+    .hint{
+      margin-top:12px;
+      font-size:13px;
+      color:#9fb3d6;
+      opacity:0.95;
+    }
+
+   
+    @media (max-width:480px){
+      :root{ --size: 160px; }
+      .face{ font-size:28px; border-radius:8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>3D Cube — 6 Faces Sliding</h1>
+    <p class="note">The cube rotates to show each of the six faces. Hover to pause.</p>
+
+    <div class="scene" aria-hidden="false">
+      <div class="cube" role="img" aria-label="Animated 3D cube showing six faces">
+        <div class="face face--1">
+          1<br><small>Front</small>
+        </div>
+        <div class="face face--2">
+          2<br><small>Right</small>
+        </div>
+        <div class="face face--3">
+          3<br><small>Back</small>
+        </div>
+        <div class="face face--4">
+          4<br><small>Left</small>
+        </div>
+        <div class="face face--5">
+          5<br><small>Top</small>
+        </div>
+        <div class="face face--6">
+          6<br><small>Bottom</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint">Tip: change <code>--size</code> or <code>--duration</code> in the CSS to customize.</div>
+  </div>
+
+  
+  <script>
+   
+    const cube = document.querySelector('.cube');
+    let down = false, startX=0, startY=0, rx=0, ry=0;
+
+    document.addEventListener('pointerdown', e => {
+      if (!e.target.closest('.scene')) return;
+      down = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      cube.style.animationPlayState = 'paused';
+      cube.style.transition = 'transform 0.15s linear';
+    });
+
+    document.addEventListener('pointermove', e => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      cube.style.transform = `rotateX(${ -dy / 3 }deg) rotateY(${ dx / 3 }deg) translateZ(calc(var(--size) / -2))`;
+    });
+
+    document.addEventListener('pointerup', () => {
+      if (!down) return;
+      down = false;
+      cube.style.transition = '';
+      cube.style.animationPlayState = 'running';
+    });
+  </script>
+</body>
+</html>
